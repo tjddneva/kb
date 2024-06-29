@@ -1,8 +1,10 @@
 package com.kb.shop.config;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -19,10 +21,12 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authorizeRequests ->
                         // 인가된 path를 지정해줌
                         authorizeRequests
-                                .requestMatchers("/", "/actuator/**", "/check/**", "/h2-console/**", "/home", "/register", "/css/**", "/js/**", "/swagger-ui/**", "/v3/api-docs/**", "/swagger-ui.html", "/login", "/chat", "/cart/**", "/seller/**", "/checkId").permitAll()
+                                //.requestMatchers("/", "/actuator/**", "/check/**", "/h2-console/**", "/home", "/register", "/css/**", "/js/**", "/swagger-ui/**", "/v3/api-docs/**", "/swagger-ui.html", "/login", "/chat", "/cart/**", "/seller/**", "/checkId").permitAll()
+                                .requestMatchers("/", "/actuator/**", "/check/**", "/h2-console/**", "/home", "/register", "/css/**", "/js/**", "/swagger-ui/**", "/v3/api-docs/**", "/swagger-ui.html", "/login", "/chat", "/cart/**", "/seller/**", "/checkId","/**").permitAll()
                                 .anyRequest().authenticated()
                 )
                 // 로그인을 통해 인증하는 내용
+                /*
                 .formLogin(formLogin ->
                         formLogin
                                 .loginPage("/login")
@@ -35,6 +39,7 @@ public class SecurityConfig {
                                 .logoutSuccessUrl("/login?logout")
                                 .permitAll()
                 )
+                */
                 // 세션 고정을 통해 인증 정보를 유지
                 .sessionManagement(sessionManagement ->
                         sessionManagement
@@ -44,8 +49,9 @@ public class SecurityConfig {
                 // 해당 헤더를 통해 보안을 강화하여 전달할 수 있다.
                 .csrf(csrf -> csrf
                         .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
-                        .ignoringRequestMatchers("/cart/**", "/seller/**", "/check/**", "/actuator/**")  // CSRF 보호 비활성화 경로 설정
+                        .ignoringRequestMatchers("/cart/**", "/seller/**", "/check/**", "/actuator/**", "/h2-console/**", "/**")  // CSRF 보호 비활성화 경로 설정
                 )
+                .headers(headers -> headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin))
         ;
 
         return http.build();

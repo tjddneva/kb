@@ -1,21 +1,22 @@
 package com.kb.shop.domain;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Data;
+
+import java.util.List;
 
 @Entity
 @Data
 public class ShippingInfo {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     // Order id
-    // OrderItem id
-    // shippingStatus
+    Long orderId;
 
+    // OrderItem id
+    Long orderItemId;
+
+    private String shippingStatus;
 }

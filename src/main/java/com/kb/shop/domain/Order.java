@@ -21,6 +21,12 @@ public class Order {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
+    /*
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "shippingInfo_id", nullable = true)
+    private ShippingInfo shippingInfo;
+    */
+
     @Enumerated(EnumType.STRING)
     private OrderStatus status;
 
@@ -37,7 +43,6 @@ public class Order {
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Fulfillment> fulfillments;
-
 
     public double calculateTotalAmount() {
         return orderItems.stream()

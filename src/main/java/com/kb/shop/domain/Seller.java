@@ -1,5 +1,6 @@
 package com.kb.shop.domain;
 
+import com.kb.shop.domain.enums.SellerGrade;
 import jakarta.persistence.*;
 import lombok.Data;
 

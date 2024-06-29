@@ -24,6 +24,12 @@ public class OrderItem {
     @JoinColumn(name = "seller_id", nullable = false)
     private Seller seller;
 
+    /*
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "shippingInfo_id", nullable = true)
+    private ShippingInfo shippingInfo;
+    */
+
     private int quantity;
     private double price;
 
